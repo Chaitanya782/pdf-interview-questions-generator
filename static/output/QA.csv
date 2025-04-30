@@ -1,0 +1,135 @@
+Question,Answer
+Briefly explain the concepts of Forward Propagation and Backward Propagation in a neural network.,"Based on the provided context:
+
+*   **Forward Propagation:** This is the process where input data is passed through the neural network layers. It involves taking the input, calculating a weighted sum, applying an activation function, and producing an output. It's the flow from input to output.
+*   **Backward Propagation:** This is the process used to train the network. It involves calculating the gradients (how much the error changes with respect to the weights) using the chain rule and then updating the weights and biases of the network to reduce the error. It's the flow from the output error back through the network to adjust parameters."
+"What is the main problem with Gradient Descent mentioned in the text, and what general type of solution is proposed using activation functions like ReLU or ELU?","Based on the text:
+
+1.  The main problem with Gradient Descent mentioned is **Vanishing/exploding gradients**.
+2.  The general type of solution proposed using activation functions like ReLU, Leaky ReLU, and ELU is **Activation Functions** themselves, which are listed under the ""Solutions"" section for the Gradient Descent Problem."
+Explain the primary purpose of activation functions. When would you typically use a Sigmoid function versus a Softmax function?,"Based on the provided context:
+
+The primary purpose of activation functions is to transform the weighted sum of inputs from a neuron into its output. They introduce non-linearity into the network, allowing it to learn complex patterns.
+
+You would typically use:
+*   **Sigmoid:** For **Binary Classification** problems. It outputs a single value between 0 and 1, which can be interpreted as the probability of belonging to one of the two classes.
+*   **Softmax:** For **Multi-class Classification** problems. It converts the raw output values (logits) into a probability distribution over multiple classes, where the outputs sum up to 1."
+"What is the role of a Loss Function during neural network training? Name one loss function suitable for regression and one for multi-class classification, as listed in the text.","Based on the text provided:
+
+The role of a Loss Function during neural network training is to quantify the difference or error between the network's predicted output and the actual target value. This error signal is then used by the optimization algorithm (like Gradient Descent) to update the network's weights and biases during training, aiming to minimize this error.
+
+*   One loss function suitable for **regression** listed is **MSE** (Mean Squared Error).
+*   One loss function suitable for **multi-class classification** listed is **Categorical CE** (Categorical Cross-Entropy) or **Sparse Categorical CE**."
+"What is the function of an Optimizer in training? Briefly describe the difference between Gradient Descent, Stochastic Gradient Descent, and Mini-Batch Gradient Descent.","Based on the provided context:
+
+The function of an **Optimizer** in training is to guide the process of updating the model's weights during backward propagation to minimize the loss function.
+
+Here's the difference between the three types of Gradient Descent:
+
+*   **Gradient Descent:** Uses the **full dataset** to calculate the gradient and update weights. It is stable but slow.
+*   **Stochastic GD:** Uses a **single sample** to calculate the gradient and update weights. It is faster but noisy.
+*   **Mini-Batch GD:** Uses a **balance** between the full dataset and a single sample, updating weights based on a small subset (batch) of the data."
+"Based on the provided examples, what is a key difference between using the Sequential API and the Functional API in Keras?","Based on the provided examples:
+
+A key difference is that the **Functional API** allows for more complex network architectures, such as those with **multiple inputs** or layers that **merge** (like the `concatenate` example), whereas the **Sequential API** example shows a simple **linear stack** of layers."
+Describe the purpose of the `Dense` layer and the `Dropout` layer as used in the Keras examples.,"Based on the provided Keras examples in the ANN Cheat Sheet:
+
+1.  **`Dense` Layer:**
+    *   The `Dense` layer is the standard fully connected layer in a neural network.
+    *   As shown in the examples (`Dense(128, ...)`), it takes inputs from the previous layer and connects every neuron in the `Dense` layer to every neuron in the previous layer.
+    *   It performs the core computation of a neuron: calculating a weighted sum of inputs, adding a bias, and then applying an activation function (like 'relu', 'sigmoid', or 'softmax' as seen in the examples).
+    *   The number inside the parentheses (e.g., 128, 64, 32, `output_dim`) specifies the number of neurons (or units) in that layer.
+
+2.  **`Dropout` Layer:**
+    *   The `Dropout` layer is shown in the examples (`Dropout(0.2)`) placed between `Dense` layers.
+    *   It's a technique used during training. The parameter (e.g., 0.2) indicates the fraction of input units to randomly set to 0 at each update step.
+    *   While the document doesn't explicitly state its purpose, in the context of neural networks, Dropout is a common regularization technique used to prevent the model from overfitting the training data. By randomly dropping neurons, it forces the network to learn more robust features."
+"What essential information do you typically provide when compiling (`model.compile`) and fitting (`model.fit`) a Keras model, based on the examples?","Based on the provided examples:
+
+When compiling a Keras model (`model.compile`), you typically provide:
+
+1.  **`optimizer`**: Specifies the algorithm used to update the model's weights during training (e.g., `Adam`, `'adam'`).
+2.  **`loss`**: Specifies the function used to measure the difference between the model's predictions and the true labels (e.g., `'binary_crossentropy'`, `'categorical_crossentropy'`, `'mse'`).
+3.  **`metrics`**: Specifies the metrics used to evaluate the model's performance during training and testing (e.g., `['accuracy']`).
+
+When fitting a Keras model (`model.fit`), you typically provide:
+
+1.  **Training Data**: The input features (`X_train` or a list like `[X_A_train, X_B_train]`) and the corresponding target labels (`y_train`).
+2.  **`epochs`**: The number of times the training algorithm will iterate over the entire training dataset.
+3.  **`batch_size`**: The number of samples per gradient update.
+4.  **`validation_split`**: A fraction of the training data to be used as validation data for evaluating the model during training.
+5.  **`callbacks`**: A list of functions to apply during training, such as `EarlyStopping`."
+"Based on the text, how can you visualize the training history (loss and accuracy) and evaluate a classification model using a Confusion Matrix and Classification Report?","Based on the text provided:
+
+1.  **Visualize Training History (Loss and Accuracy):**
+    You can visualize the training and validation history (accuracy and loss) over epochs using `matplotlib.pyplot`.
+    *   Plot the training accuracy (`history.history['accuracy']`) and validation accuracy (`history.history['val_accuracy']`) on one subplot.
+    *   Plot the training loss (`history.history['loss']`) and validation loss (`history.history['val_loss']`) on another subplot.
+    *   Add titles, labels (Epoch, Accuracy, Loss), and legends to distinguish between train and validation curves.
+
+    The code snippet provided for this is:
+    ```python
+    import matplotlib.pyplot as plt
+    # Accuracy plot
+    plt.figure(figsize=(12, 4))
+    plt.subplot(1, 2, 1)
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='lower right')
+    # Loss plot
+    plt.subplot(1, 2, 2)
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper right')
+    plt.tight_layout()
+    plt.show()
+    ```
+
+2.  **Evaluate using a Confusion Matrix:**
+    For classification tasks, you can evaluate the model using a Confusion Matrix from `sklearn.metrics`.
+    *   First, get the model's predictions on the test set (`X_test`).
+    *   Convert the predictions to class labels (`y_pred_classes`), typically by taking the index of the maximum probability for multi-class or thresholding for binary.
+    *   Calculate the confusion matrix using `confusion_matrix(y_test, y_pred_classes)`.
+    *   Visualize the confusion matrix using `seaborn.heatmap` for better readability, showing the counts of true vs. predicted labels.
+
+    The code snippet provided for this is:
+    ```python
+    from sklearn.metrics import confusion_matrix
+    import numpy as np
+    import seaborn as sns
+    y_pred = model.predict(X_test)
+    y_pred_classes = np.argmax(y_pred, axis=1) # For multi-class
+    # OR y_pred_classes = (y_pred > 0.5).astype(int) # For binary
+    cm = confusion_matrix(y_test, y_pred_classes)
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+    plt.title('Confusion Matrix')
+    plt.ylabel('True Label')
+    plt.xlabel('Predicted Label')
+    plt.show()
+    ```
+
+3.  **Evaluate using a Classification Report:**
+    You can get a detailed classification report from `sklearn.metrics` which includes metrics like precision, recall, F1-score, and support for each class.
+    *   This also requires the true labels (`y_test`) and the predicted class labels (`y_pred_classes`) obtained from the model's predictions.
+    *   Use `classification_report(y_test, y_pred_classes)` and print the result.
+
+    The code snippet provided for this is:
+    ```python
+    from sklearn.metrics import classification_report
+    print(classification_report(y_test, y_pred_classes))
+    ```"
+"What is Early Stopping and what are its main parameters (`monitor`, `patience`) used for, according to the text?","Based on the text provided:
+
+The text shows how to use **Early Stopping** as a callback during model training, but it does not explicitly define what Early Stopping is.
+
+However, it does describe the purpose of the main parameters:
+
+*   **`monitor`**: This parameter specifies the metric that the Early Stopping callback will watch. According to the comment, it can be `'val_loss'` (validation loss) or `'val_accuracy'` (validation accuracy).
+*   **`patience`**: This parameter determines the ""number of epochs with no improvement"" in the monitored metric before the training is stopped."
